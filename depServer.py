@@ -55,4 +55,4 @@ while True:
     else:
         st.write("No data available")
 
-    time.sleep(1)  # Adjust the frequency of fetching data as needed
+    time.sleep(5)  # Adjust the frequency of fetching data as needed
