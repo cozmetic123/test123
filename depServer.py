@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import time
 
 # Ngrok public URL for your local server
-ngrok_url = "https://fea8-2407-d000-1a-9f16-9095-6aa2-ee7e-4507.ngrok-free.app/get_samples"
+ngrok_url = "https://486f-2407-d000-1a-9f16-9095-6aa2-ee7e-4507.ngrok-free/get_samples"
 
 st.title("Remote INMP441 Audio Data Viewer")
 st.write("Fetching data from the local server exposed via Ngrok...")
