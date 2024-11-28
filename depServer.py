@@ -32,15 +32,19 @@ def fetch_data():
         st.error(f"Error fetching data: {e}")
         return None
 
-# Track the last data fetch time
+# Track the last data fetch time and previous data
 last_fetch_time = None
+previous_samples = None
 
 # Continuously fetch data and update the plot
 while True:
     samples = fetch_data()
-    
-    if samples is not None and len(samples) > 0:
+
+    # Check if new data is received and if it's different from the previous data
+    if samples is not None and len(samples) > 0 and not np.array_equal(samples, previous_samples):
         last_fetch_time = datetime.now()  # Update the last fetch time
+        previous_samples = samples  # Update the previous samples
+
         # Create a new Plotly figure
         fig = go.Figure(data=[go.Scatter(y=samples, mode='lines', name='I2S Data')])
         fig.update_layout(
