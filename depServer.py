@@ -11,9 +11,9 @@ ngrok_url = "https://8351-2407-d000-f-bce6-6dc8-f949-b628-8b5e.ngrok-free.app/ge
 st.title("Remote INMP441 Audio Data Viewer")
 st.write("Fetching data from the local server exposed via Ngrok...")
 
-# Initialize placeholders for the plot and elapsed time
-plotly_chart_placeholder = st.empty()
+# Initialize placeholders for the timer and plot
 last_transfer_time = st.empty()
+plotly_chart_placeholder = st.empty()
 
 # Function to fetch data from the Ngrok URL
 def fetch_data():
@@ -57,9 +57,9 @@ while True:
         # Update the placeholder with a unique key for each update
         plotly_chart_placeholder.plotly_chart(fig, use_container_width=True, key=f"plot_{datetime.now().timestamp()}")
 
-    # Display the elapsed time since the last successful data transfer
+    # Display the elapsed time since the last successful data transfer above the plot
     if last_fetch_time:
         elapsed_time = (datetime.now() - last_fetch_time).total_seconds()
-        last_transfer_time.write(f"Seconds since last data transfer: {elapsed_time:.2f}")
+        last_transfer_time.write(f"**Seconds since last data transfer:** {elapsed_time:.2f}")
 
     time.sleep(5)  # Adjust the frequency of fetching data as needed
