@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 # Ngrok public URL for your local server
-ngrok_url = "https://8351-2407-d000-f-bce6-6dc8-f949-b628-8b5e.ngrok-free.app/get_samples"
+ngrok_url = "https://frank-toad-oddly.ngrok-free.app/get_samples"
 
 st.title("Remote INMP441 Audio Data Viewer")
 st.write("Fetching data from the local server exposed via Ngrok...")
