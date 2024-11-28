@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import numpy as np
 import plotly.graph_objs as go
+from datetime import datetime
 import time
 
 # Ngrok public URL for your local server
@@ -20,6 +21,9 @@ fig.update_layout(
     yaxis=dict(range=[-32768, 32767])  # Adjust Y-axis for 16-bit audio
 )
 plotly_chart = st.plotly_chart(fig, use_container_width=True)
+
+# Display for the last packet timestamp
+last_packet_time = st.empty()
 
 # Function to fetch data from the Ngrok URL
 def fetch_data():
@@ -43,6 +47,7 @@ while True:
     samples = fetch_data()
     
     if samples is not None and len(samples) > 0:
+        # Update plot
         fig = go.Figure(data=[go.Scatter(y=samples, mode='lines', name='I2S Data')])
         fig.update_layout(
             title="Real-time I2S Data Plot",
@@ -52,6 +57,9 @@ while True:
             yaxis=dict(range=[-32768, 32767])  # 16-bit audio range
         )
         plotly_chart.plotly_chart(fig, use_container_width=True)
+        
+        # Update timestamp
+        last_packet_time.write(f"Last packet received at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     else:
         st.write("No data available")
 
