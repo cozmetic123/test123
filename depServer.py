@@ -11,18 +11,8 @@ ngrok_url = "https://8351-2407-d000-f-bce6-6dc8-f949-b628-8b5e.ngrok-free.app/ge
 st.title("Remote INMP441 Audio Data Viewer")
 st.write("Fetching data from the local server exposed via Ngrok...")
 
-# Plotly figure setup
-fig = go.Figure()
-fig.update_layout(
-    title="Real-time I2S Data Plot",
-    xaxis_title="Samples",
-    yaxis_title="Amplitude",
-    xaxis=dict(range=[0, 1024]),  # X-axis range is fixed to 1024 samples
-    yaxis=dict(range=[-32768, 32767])  # Adjust Y-axis for 16-bit audio
-)
-plotly_chart = st.plotly_chart(fig, use_container_width=True)
-
-# Display elapsed time since the last data transfer
+# Initialize placeholders for the plot and elapsed time
+plotly_chart_placeholder = st.empty()
 last_transfer_time = st.empty()
 
 # Function to fetch data from the Ngrok URL
@@ -51,6 +41,7 @@ while True:
     
     if samples is not None and len(samples) > 0:
         last_fetch_time = datetime.now()  # Update the last fetch time
+        # Create a new Plotly figure
         fig = go.Figure(data=[go.Scatter(y=samples, mode='lines', name='I2S Data')])
         fig.update_layout(
             title="Real-time I2S Data Plot",
@@ -59,7 +50,8 @@ while True:
             xaxis=dict(range=[0, len(samples)]),  # Update X-axis dynamically based on data length
             yaxis=dict(range=[-32768, 32767])  # 16-bit audio range
         )
-        plotly_chart.plotly_chart(fig, use_container_width=True)
+        # Update the placeholder with a unique key for each update
+        plotly_chart_placeholder.plotly_chart(fig, use_container_width=True, key=f"plot_{datetime.now().timestamp()}")
 
     # Display the elapsed time since the last successful data transfer
     if last_fetch_time:
