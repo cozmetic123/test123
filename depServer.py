@@ -53,7 +53,8 @@ while True:
         fig.update_layout(
             xaxis=dict(range=[0, len(samples)])  # Update X-axis dynamically based on data length
         )
-        plotly_chart.plotly_chart(fig, use_container_width=True)
+        # Use a unique key for the plotly_chart
+        plotly_chart.plotly_chart(fig, use_container_width=True, key="unique_plot")
         
         # Update timestamp
         last_packet_time.write(f"Last packet received at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
